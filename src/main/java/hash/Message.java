@@ -1,4 +1,4 @@
-package client;
+package hash;
 
 import java.io.Serializable;
 
@@ -17,6 +17,18 @@ public class Message implements Serializable {
         this.valueSize = valueSize;
         this.value = value;
         this.error = error;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "content=" + content +
+                ", keySize=" + keySize +
+                ", key='" + key + '\'' +
+                ", valueSize=" + valueSize +
+                ", value='" + value + '\'' +
+                ", error=" + error +
+                '}';
     }
 
     public int getContent() {

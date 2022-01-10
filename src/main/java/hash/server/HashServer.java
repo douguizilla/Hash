@@ -1,6 +1,9 @@
-package server;
+package hash.server;
 
 
+
+
+import hash.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,8 +15,8 @@ public class HashServer {
         ServerSocket server = new ServerSocket(12345);
         Socket client = server.accept();
         ObjectInputStream response = new ObjectInputStream(client.getInputStream());
-        Pessoa p = (Pessoa) response.readObject();
-        System.out.println("Nome " + p.getNome() + " Idade " + p.getIdade());
+        Message m = (Message) response.readObject();
+        System.out.println(m.toString());
         response.close();
         client.close();
         server.close();
