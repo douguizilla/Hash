@@ -21,10 +21,11 @@ public class ThreadHashServer extends Thread {
         //logica que o server vai fazer para o client
         try {
             ObjectInputStream entrance = new ObjectInputStream(client.getInputStream());
+            ObjectOutputStream response = new ObjectOutputStream(client.getOutputStream());
             Message m = (Message) entrance.readObject();
             System.out.println(m.toString());
 
-            operation(m);
+            operation(m, response);
 
             hashTable.showAll();
 
@@ -36,8 +37,8 @@ public class ThreadHashServer extends Thread {
         }
     }
 
-    public void operation(Message request) throws IOException {
-        ObjectOutputStream response = new ObjectOutputStream(client.getOutputStream());
+    public void operation(Message request,ObjectOutputStream response) throws IOException {
+
         Message message;
         int result;
         switch (request.getContent()) {

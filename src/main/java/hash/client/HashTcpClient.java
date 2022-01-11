@@ -50,6 +50,10 @@ public class HashTcpClient {
         String value;
         Message toServer;
         Message fromServer;
+
+        ObjectOutputStream requestAdd = new ObjectOutputStream(client.getOutputStream());
+        ObjectInputStream responseAdd = new ObjectInputStream(client.getInputStream());
+
         switch (option) {
             case 1:
                 System.out.print("Digite a chave: ");
@@ -59,10 +63,9 @@ public class HashTcpClient {
                 value = input.next();
 
                 toServer = new Message(0,key.length(),key,value.length(),value,4);
-                ObjectOutputStream requestAdd = new ObjectOutputStream(client.getOutputStream());
+
                 requestAdd.writeObject(toServer);
 
-                ObjectInputStream responseAdd = new ObjectInputStream(client.getInputStream());
                 fromServer = (Message) responseAdd.readObject();
                 System.out.println(handleMessage(fromServer));
                 break;
@@ -72,11 +75,9 @@ public class HashTcpClient {
                 key = input.next();
 
                 toServer = new Message(1,key.length(),key,0,"",4);
-                ObjectOutputStream requestRead = new ObjectOutputStream(client.getOutputStream());
-                requestRead.writeObject(toServer);
+                requestAdd.writeObject(toServer);
 
-                ObjectInputStream responseRead = new ObjectInputStream(client.getInputStream());
-                fromServer = (Message) responseRead.readObject();
+                fromServer = (Message) responseAdd.readObject();
                 System.out.println(handleMessage(fromServer));
                 break;
 
@@ -88,11 +89,9 @@ public class HashTcpClient {
                 value = input.next();
 
                 toServer = new Message(2,key.length(),key,value.length(),value,4);
-                ObjectOutputStream requestUpdate = new ObjectOutputStream(client.getOutputStream());
-                requestUpdate.writeObject(toServer);
+                requestAdd.writeObject(toServer);
 
-                ObjectInputStream responseUpdate = new ObjectInputStream(client.getInputStream());
-                fromServer = (Message) responseUpdate.readObject();
+                fromServer = (Message) responseAdd.readObject();
 
                 System.out.println(handleMessage(fromServer));
                 break;
@@ -102,11 +101,9 @@ public class HashTcpClient {
                 key = input.next();
 
                 toServer = new Message(3,key.length(),key,0,"",4);
-                ObjectOutputStream requestDelete = new ObjectOutputStream(client.getOutputStream());
-                requestDelete.writeObject(toServer);
+                requestAdd.writeObject(toServer);
 
-                ObjectInputStream responseDelete = new ObjectInputStream(client.getInputStream());
-                fromServer = (Message) responseDelete.readObject();
+                fromServer = (Message) responseAdd.readObject();
                 System.out.println(handleMessage(fromServer));
                 break;
 
