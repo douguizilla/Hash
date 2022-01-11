@@ -39,6 +39,7 @@ public class HashTcpClient {
     }
 
     public static void menu(){
+        System.out.println("======================================");
         System.out.println("Escolha uma das opções abaixo: ");
         System.out.println("1 - Criar");
         System.out.println("2 - Ler");
@@ -125,30 +126,30 @@ public class HashTcpClient {
         switch (message.getContent()){
             case 0:
                 if(message.getError() < 5){
-                    return "Dados inseridos com sucesso!";
+                    return "RETORNO: Dados inseridos com sucesso!";
                 }else{
-                    return "Não foi possível inserir com esta chave!";
+                    return "RETORNO: Não foi possível inserir com esta chave!";
                 }
             case 1:
                 if(message.getError() < 5){
-                    return "Valor retornado: " + message.getValue();
+                    return "RETORNO: Valor retornado: " + message.getValue();
                 }else{
-                    return "Não foi possível ler, pois a chave não existe!";
+                    return "RETORNO: Não foi possível ler, pois a chave não existe!";
                 }
             case 2:
                 if(message.getError() < 5){
-                    return "Atualizado com sucesso";
+                    return "RETORNO: Atualizado com sucesso";
                 }else{
-                    return "Não foi possível atualizar, pois a chave não existe!";
+                    return "RETORNO: Não foi possível atualizar, pois a chave não existe!";
                 }
             case 3:
                 if(message.getError() < 5){
-                    return "Deletado com sucesso, valor retornado: " + message.getValue();
+                    return "RETORNO: Deletado com sucesso, valor retornado: " + message.getValue();
                 }else{
-                    return "Não foi possível deletar, pois a chave não existe!";
+                    return "RETORNO: Não foi possível deletar, pois a chave não existe!";
                 }
             default:
-                return "Retorno desconhecido.";
+                return "RETORNO: opção desconhecida.";
         }
     }
 }
