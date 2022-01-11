@@ -25,6 +25,8 @@ public class HashTcpClient {
 
                 if (option == 5) {
                     client.close();
+                    request.close();
+                    response.close();
                     System.out.println("Encerrado.");
                     break;
                 }
@@ -108,8 +110,10 @@ public class HashTcpClient {
                 break;
 
             case 5:
-                request.close();
-                response.close();
+
+                toServer = new Message(5,0,"",0,"",4);
+                request.writeObject(toServer);
+
                 break;
 
             default:

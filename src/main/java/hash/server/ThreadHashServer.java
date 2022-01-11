@@ -29,13 +29,18 @@ public class ThreadHashServer extends Thread {
                operation(m, response);
 
                hashTable.showAll();
+
                if (m.getContent() == 5){
+                   response.close();
+                   entrance.close();
+                   client.close();
                    break;
                }
            }
 
         } catch (Exception e) {
             System.out.println("Erro " + e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -81,6 +86,9 @@ public class ThreadHashServer extends Thread {
                     message = new Message(3, 0, "", 0, "", 5);
                 }
                 response.writeObject(message);
+                break;
+            case 5:
+                System.out.println("cliente saiu");
                 break;
             default:
                 message = new Message(4, 0, "", 0, "", 5);
