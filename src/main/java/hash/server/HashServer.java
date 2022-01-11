@@ -7,6 +7,7 @@ import java.net.Socket;
 public class HashServer {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         ServerSocket server = new ServerSocket(12345);
+        HashTable hashTable = new HashTable();
 
         while(true){
             //aguardando conexões de clientes
@@ -16,7 +17,7 @@ public class HashServer {
             System.out.println("Cliente " + client.getInetAddress().getHostAddress() + " conectado");
 
             //definir uma thread para cada cliente
-            ThreadHashServer thread = new ThreadHashServer(client);
+            ThreadHashServer thread = new ThreadHashServer(client,hashTable);
             thread.start();
         }
 

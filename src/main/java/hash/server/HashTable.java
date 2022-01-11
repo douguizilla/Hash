@@ -7,7 +7,7 @@ public class HashTable {
     private Map<String,String> hashTable = new HashMap<>();
 
     public int add(String key, String value){
-        if (hashTable.containsKey(key)) {
+        if (!hashTable.containsKey(key)) {
             hashTable.put(key,value);
             return 1; //sucesso
         }
@@ -34,5 +34,13 @@ public class HashTable {
 
     public String read(String key){
         return hashTable.get(key);
+    }
+
+    public void showAll(){
+        for (String _key: hashTable.keySet()) {
+            String key = _key;
+            String value = hashTable.get(key);
+            System.out.println(key + " " + value);
+        }
     }
 }
