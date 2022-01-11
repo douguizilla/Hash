@@ -13,16 +13,20 @@ public class HashTcpClient {
     public static void main(String[] args) {
         try {
             Socket client = new Socket("127.0.0.1",12345);
+            ObjectOutputStream request = new ObjectOutputStream(client.getOutputStream());
+            ObjectInputStream response = new ObjectInputStream(client.getInputStream());
 
             while (true) {
                 menu();
                 Scanner input = new Scanner(System.in);
                 int option = input.nextInt();
 
-                optionHandle(option, client);
+                optionHandle(option, input, request, response);
 
                 if (option == 5) {
                     client.close();
+                    request.close();
+                    response.close();
                     System.out.println("Encerrado.");
                     break;
                 }
@@ -30,6 +34,7 @@ public class HashTcpClient {
             }
         }catch (Exception e){
             System.out.println("Erro " + e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -43,16 +48,12 @@ public class HashTcpClient {
         System.out.print("Opção: ");
     }
 
-    public static void optionHandle(int option, Socket client) throws IOException, ClassNotFoundException {
-        Scanner input = new Scanner(System.in);
+    public static void optionHandle(int option, Scanner input, ObjectOutputStream request, ObjectInputStream response) throws IOException, ClassNotFoundException {
 
         String key;
         String value;
         Message toServer;
         Message fromServer;
-
-        ObjectOutputStream requestAdd = new ObjectOutputStream(client.getOutputStream());
-        ObjectInputStream responseAdd = new ObjectInputStream(client.getInputStream());
 
         switch (option) {
             case 1:
@@ -64,20 +65,21 @@ public class HashTcpClient {
 
                 toServer = new Message(0,key.length(),key,value.length(),value,4);
 
-                requestAdd.writeObject(toServer);
+                request.writeObject(toServer);
 
-                fromServer = (Message) responseAdd.readObject();
+                fromServer = (Message) response.readObject();
                 System.out.println(handleMessage(fromServer));
                 break;
 
             case 2:
                 System.out.print("Digite a chave: ");
+
                 key = input.next();
 
                 toServer = new Message(1,key.length(),key,0,"",4);
-                requestAdd.writeObject(toServer);
+                request.writeObject(toServer);
 
-                fromServer = (Message) responseAdd.readObject();
+                fromServer = (Message) response.readObject();
                 System.out.println(handleMessage(fromServer));
                 break;
 
@@ -89,9 +91,9 @@ public class HashTcpClient {
                 value = input.next();
 
                 toServer = new Message(2,key.length(),key,value.length(),value,4);
-                requestAdd.writeObject(toServer);
+                request.writeObject(toServer);
 
-                fromServer = (Message) responseAdd.readObject();
+                fromServer = (Message) response.readObject();
 
                 System.out.println(handleMessage(fromServer));
                 break;
@@ -101,13 +103,16 @@ public class HashTcpClient {
                 key = input.next();
 
                 toServer = new Message(3,key.length(),key,0,"",4);
-                requestAdd.writeObject(toServer);
+                request.writeObject(toServer);
 
-                fromServer = (Message) responseAdd.readObject();
+                fromServer = (Message) response.readObject();
                 System.out.println(handleMessage(fromServer));
                 break;
 
             case 5:
+
+                toServer = new Message(5,0,"",0,"",4);
+                request.writeObject(toServer);
 
                 break;
 
