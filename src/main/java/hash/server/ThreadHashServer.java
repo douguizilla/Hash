@@ -20,17 +20,19 @@ public class ThreadHashServer extends Thread {
     public void run() {
         //logica que o server vai fazer para o client
         try {
-            ObjectInputStream entrance = new ObjectInputStream(client.getInputStream());
             ObjectOutputStream response = new ObjectOutputStream(client.getOutputStream());
-            Message m = (Message) entrance.readObject();
-            System.out.println(m.toString());
+            ObjectInputStream entrance = new ObjectInputStream(client.getInputStream());
+           while(true) {
+               Message m = (Message) entrance.readObject();
+               System.out.println(m.toString());
 
-            operation(m, response);
+               operation(m, response);
 
-            hashTable.showAll();
-
-            entrance.close();
-            client.close();
+               hashTable.showAll();
+               if (m.getContent() == 5){
+                   break;
+               }
+           }
 
         } catch (Exception e) {
             System.out.println("Erro " + e.toString());
