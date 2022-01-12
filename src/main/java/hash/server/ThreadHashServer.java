@@ -55,10 +55,13 @@ public class ThreadHashServer extends Thread {
 
         Message message;
         int result;
+        String value;
+
         switch (request.getContent()) {
             case 0:
-                result = hashTable.add(request.getKey(), request.getValue());
-
+                synchronized (hashTable) {
+                    result = hashTable.add(request.getKey(), request.getValue());
+                }
                 if (result == 1) {
                     message = new Message(0, 0, "", 0, "", 4);
                 } else {
@@ -67,17 +70,21 @@ public class ThreadHashServer extends Thread {
                 response.writeObject(message);
                 break;
             case 1:
-                String read = hashTable.read(request.getKey());
-                if (read != null) {
-                    message = new Message(1, request.getKeySize(),request.getKey(),read.length(),read, 4);
+
+                synchronized (hashTable) {
+                    value = hashTable.read(request.getKey());
+                }
+                if (value != null) {
+                    message = new Message(1, request.getKeySize(),request.getKey(),value.length(),value, 4);
                 } else {
                     message = new Message(1, 0, "", 0, "", 5);
                 }
                 response.writeObject(message);
                 break;
             case 2:
-                result = hashTable.update(request.getKey(), request.getValue());
-
+                synchronized (hashTable) {
+                    result = hashTable.update(request.getKey(), request.getValue());
+                }
                 if (result == 1) {
                     message = new Message(2, 0, "", 0, "", 4);
                 } else {
@@ -86,7 +93,9 @@ public class ThreadHashServer extends Thread {
                 response.writeObject(message);
                 break;
             case 3:
-                String value = hashTable.remove(request.getKey());
+                synchronized (hashTable) {
+                    value = hashTable.remove(request.getKey());
+                }
                 if(value != null){
                     message = new Message(3, request.getKeySize(), request.getKey(), value.length(), value, 4);
                 } else {
