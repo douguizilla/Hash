@@ -16,35 +16,57 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
     public void create(Hash.CreateRequest request, StreamObserver<Hash.CreateResponse> responseObserver) {
         String key = request.getKey();
         String value = request.getValue();
-        int result;
         synchronized (hashTable) {
-            result = hashTable.add(key, value);
+            int result = hashTable.add(key, value);
 
             Hash.CreateResponse response;
             if (result == 1) {
                 response = Hash.CreateResponse.newBuilder().setResponse(true).build();
-                responseObserver.onNext(response);
             } else {
                 response = Hash.CreateResponse.newBuilder().setResponse(false).build();
-                responseObserver.onNext(response);
             }
+            responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
     }
 
     @Override
     public void read(Hash.ReadRequest request, StreamObserver<Hash.ReadResponse> responseObserver) {
-        super.read(request, responseObserver);
+        String key = request.getKey();
+        String value;
+        synchronized (hashTable){
+            value = hashTable.read(key);
+            Hash.ReadResponse response;
+            if(value != null){
+                response = Hash.ReadResponse.newBuilder().setKey(key).setValue(value).build();
+            }else {
+                response = Hash.ReadResponse.newBuilder().setKey(key).setValue("").build();
+            }
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
     }
 
     @Override
     public void update(Hash.UpdateRequest request, StreamObserver<Hash.UpdateResponse> responseObserver) {
-        super.update(request, responseObserver);
+        String key = request.getKey();
+        String value = request.getValue();
+        synchronized (hashTable){
+            int result = hashTable.update(key,value);
+            Hash.UpdateResponse response;
+            if(result == 1){
+                response = Hash.UpdateResponse.newBuilder().setResponse(true).build();
+            }else{
+                response = Hash.UpdateResponse.newBuilder().setResponse(false).build();
+            }
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
     }
 
     @Override
     public void delete(Hash.DeleteRequest request, StreamObserver<Hash.DeleteResponse> responseObserver) {
-        super.delete(request, responseObserver);
+
     }
 
     @Override
