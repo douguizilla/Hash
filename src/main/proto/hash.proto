@@ -42,12 +42,12 @@ message DeleteRequest{
 
 }
 message DeleteResponse{
-	string mensagem = 1;
+	string message = 1;
 	bool response = 2;
 }
 
 message ExitRequest{
-    string mensagem = 1;
+    string message = 1;
 }
 
 message ExitResponse{

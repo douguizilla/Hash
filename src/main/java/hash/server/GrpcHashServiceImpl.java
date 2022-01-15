@@ -8,7 +8,6 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
     private HashTable hashTable;
 
     GrpcHashServiceImpl(HashTable hashTable) {
-
         this.hashTable = hashTable;
     }
 
@@ -66,7 +65,19 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
 
     @Override
     public void delete(Hash.DeleteRequest request, StreamObserver<Hash.DeleteResponse> responseObserver) {
-
+        String key = request.getKey();
+        String value;
+        synchronized (hashTable){
+            value = hashTable.remove(key);
+            Hash.DeleteResponse response;
+            if(value != null){
+                response = Hash.DeleteResponse.newBuilder().setResponse(true).setMessage(value).build();
+            }else{
+                response = Hash.DeleteResponse.newBuilder().setResponse(false).setMessage(value).build();
+            }
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
     }
 
     @Override
