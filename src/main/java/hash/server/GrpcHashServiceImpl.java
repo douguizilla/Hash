@@ -5,10 +5,31 @@ import br.proto.hash.Hash;
 import io.grpc.stub.StreamObserver;
 
 public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImplBase {
+    private HashTable hashTable;
+
+    GrpcHashServiceImpl(HashTable hashTable) {
+
+        this.hashTable = hashTable;
+    }
 
     @Override
     public void create(Hash.CreateRequest request, StreamObserver<Hash.CreateResponse> responseObserver) {
-        super.create(request, responseObserver);
+        String key = request.getKey();
+        String value = request.getValue();
+        int result;
+        synchronized (hashTable) {
+            result = hashTable.add(key, value);
+
+            Hash.CreateResponse response;
+            if (result == 1) {
+                response = Hash.CreateResponse.newBuilder().setResponse(true).build();
+                responseObserver.onNext(response);
+            } else {
+                response = Hash.CreateResponse.newBuilder().setResponse(false).build();
+                responseObserver.onNext(response);
+            }
+            responseObserver.onCompleted();
+        }
     }
 
     @Override
