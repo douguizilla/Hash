@@ -7,7 +7,7 @@ service GrpcHashService {
     rpc read (ReadRequest) returns(ReadResponse);
     rpc update(UpdateRequest)returns(UpdateResponse);
     rpc delete(DeleteRequest)returns(DeleteResponse);
-    rpc sair(SairRequest)returns(SairResponse);
+    rpc exit(ExitRequest)returns(ExitResponse);
 }
 
 message EmptyResponse {}
@@ -46,10 +46,10 @@ message DeleteResponse{
 	bool response = 2;
 }
 
-message SairRequest{
+message ExitRequest{
     string mensagem = 1;
 }
 
-message SairResponse{
+message ExitResponse{
 	bool response = 1;
 }
