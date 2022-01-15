@@ -17,6 +17,7 @@ public class ThreadHashServer extends Thread {
         this.hashTable = hashTable;
     }
 
+
     public void run() {
         //logica que o server vai fazer para o client
         try {
