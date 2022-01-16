@@ -16,9 +16,18 @@ public class HashServer {
         Server grpcServer = ServerBuilder.forPort(54321).addService(
                 new GrpcHashServiceImpl(hashTable)).build();
 
-        grpcServer.start();
+        Thread grpcThread = new Thread(){
+            public void run(){
+                try {
+                    grpcServer.start();
+                    grpcServer.awaitTermination();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
 
-        grpcServer.awaitTermination();
+        grpcThread.start();
 
         while(true){
             //aguardando conexões de clientes

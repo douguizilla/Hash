@@ -82,7 +82,7 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
             if(value != null){
                 response = Hash.DeleteResponse.newBuilder().setResponse(true).setMessage(value).build();
             }else{
-                response = Hash.DeleteResponse.newBuilder().setResponse(false).setMessage(value).build();
+                response = Hash.DeleteResponse.newBuilder().setResponse(false).setMessage("").build();
             }
 
             hashTable.showAll();
