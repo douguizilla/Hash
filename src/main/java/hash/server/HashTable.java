@@ -37,10 +37,13 @@ public class HashTable {
     }
 
     public void showAll(){
+        System.out.println("=================");
+        System.out.println("Tabela atualizada:");
         for (String _key: hashTable.keySet()) {
             String key = _key;
             String value = hashTable.get(key);
             System.out.println(key + " " + value);
         }
+        System.out.println("=================");
     }
 }
