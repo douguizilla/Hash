@@ -7,11 +7,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ThreadHashServer extends Thread {
+public class ThreadTcpHashServer extends Thread {
     private Socket client;
     private HashTable hashTable;
 
-    public ThreadHashServer(Socket client, HashTable hashTable) {
+    public ThreadTcpHashServer(Socket client, HashTable hashTable) {
         this.client = client;
         this.hashTable = hashTable;
     }
