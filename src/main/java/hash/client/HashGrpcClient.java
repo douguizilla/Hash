@@ -33,7 +33,7 @@ public class HashGrpcClient {
         }
 
         channel.shutdown();
-        System.out.println("FINALIZADO");
+        System.out.println("Encerrado.");
     }
 
     public static void options(int option, Scanner input, GrpcHashServiceBlockingStub clientStub){

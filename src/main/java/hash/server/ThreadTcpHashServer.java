@@ -24,7 +24,6 @@ public class ThreadTcpHashServer extends Thread {
             ObjectInputStream entrance = new ObjectInputStream(client.getInputStream());
            while(true) {
                Message m = (Message) entrance.readObject();
-               System.out.println(m.toString());
 
                operation(m, response);
 
