@@ -28,7 +28,7 @@ public class ThreadTcpHashServer extends Thread {
 
                operation(m, response);
 
-               showHashTable();
+               hashTable.showAll();
 
                if (m.getContent() == 5){
                    response.close();
@@ -42,13 +42,6 @@ public class ThreadTcpHashServer extends Thread {
             System.out.println("Erro " + e.toString());
             e.printStackTrace();
         }
-    }
-
-    private void showHashTable(){
-        System.out.println("=================");
-        System.out.println("Tabela atualizada:");
-        hashTable.showAll();
-        System.out.println("=================");
     }
 
     public void operation(Message request,ObjectOutputStream response) throws IOException {

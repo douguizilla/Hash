@@ -24,6 +24,9 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
             } else {
                 response = Hash.CreateResponse.newBuilder().setResponse(false).build();
             }
+
+            hashTable.showAll();
+
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
@@ -41,6 +44,9 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
             }else {
                 response = Hash.ReadResponse.newBuilder().setKey(key).setValue("").build();
             }
+
+            hashTable.showAll();
+
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
@@ -58,6 +64,9 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
             }else{
                 response = Hash.UpdateResponse.newBuilder().setResponse(false).build();
             }
+
+            hashTable.showAll();
+
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
@@ -75,6 +84,9 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
             }else{
                 response = Hash.DeleteResponse.newBuilder().setResponse(false).setMessage(value).build();
             }
+
+            hashTable.showAll();
+
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         }
@@ -84,4 +96,6 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
     public void exit(Hash.ExitRequest request, StreamObserver<Hash.ExitResponse> responseObserver) {
         super.exit(request, responseObserver);
     }
+
+
 }
