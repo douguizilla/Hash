@@ -22,7 +22,7 @@ public class HashTcpClient {
 
                 while(!input.hasNextInt())
                 {
-                    System.out.println("Digite uma opção válida.");
+                    System.out.println("Digite uma opção válida.\nOpção: ");
                     input.next();
                 }
                 int option = input.nextInt();

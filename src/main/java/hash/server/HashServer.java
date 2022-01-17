@@ -33,9 +33,6 @@ public class HashServer {
             //aguardando conexões de clientes
             Socket client = server.accept();
 
-            //mostrar endereço IP do cliente
-            System.out.println("Cliente " + client.getInetAddress().getHostAddress() + " conectado");
-
             //definir uma thread para cada cliente
             ThreadTcpHashServer thread = new ThreadTcpHashServer(client,hashTable);
 

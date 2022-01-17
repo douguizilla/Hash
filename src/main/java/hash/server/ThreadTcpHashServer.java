@@ -55,8 +55,10 @@ public class ThreadTcpHashServer extends Thread {
                 result = hashTable.add(request.getKey(), request.getValue());
 
                 if (result == 1) {
+                    System.out.println("CREATE TPC REQ KEY: " + request.getKey() + ", VALUE: " + request.getValue() + ", STATUS: SUCCESS");
                     message = new Message(0, 0, "", 0, "", 4);
                 } else {
+                    System.out.println("CREATE TPC REQ KEY: " + request.getKey() + ", VALUE: " + request.getValue() + ", STATUS: FAILURE");
                     message = new Message(0, 0, "", 0, "", 5);
                 }
                 response.writeObject(message);
@@ -67,8 +69,10 @@ public class ThreadTcpHashServer extends Thread {
                 value = hashTable.read(request.getKey());
 
                 if (value != null) {
+                    System.out.println("READ TPC REQ KEY: " + request.getKey() + ", VALUE: " + value + ", STATUS: SUCCESS");
                     message = new Message(1, request.getKeySize(), request.getKey(), value.length(), value, 4);
                 } else {
+                    System.out.println("READ TPC REQ KEY: " + request.getKey() + ", VALUE: null, STATUS: FAILURE");
                     message = new Message(1, 0, "", 0, "", 5);
                 }
                 response.writeObject(message);
@@ -78,8 +82,10 @@ public class ThreadTcpHashServer extends Thread {
                 result = hashTable.update(request.getKey(), request.getValue());
 
                 if (result == 1) {
+                    System.out.println("UPDATE TPC REQ KEY: " + request.getKey() + ", CHANGE OLD_VALUE: " + result + ", TO NEW_VALUE: " + request.getValue() + ", STATUS: SUCCESS");
                     message = new Message(2, 0, "", 0, "", 4);
                 } else {
+                    System.out.println("UPDATE TPC REQ KEY: " + request.getKey() + ", VALUE: null, STATUS: FAILURE");
                     message = new Message(2, 0, "", 0, "", 5);
                 }
                 response.writeObject(message);
@@ -89,14 +95,16 @@ public class ThreadTcpHashServer extends Thread {
                 value = hashTable.remove(request.getKey());
 
                 if (value != null) {
+                    System.out.println("DELETE TPC REQ KEY: " + request.getKey() + ", RETURN_VALUE: " + value + ", STATUS: SUCCESS");
                     message = new Message(3, request.getKeySize(), request.getKey(), value.length(), value, 4);
                 } else {
+                    System.out.println("DELETE TPC REQ KEY: " + request.getKey() + ", VALUE: null, STATUS: FAILURE");
                     message = new Message(3, 0, "", 0, "", 5);
                 }
                 response.writeObject(message);
                 break;
             case 5:
-                System.out.println("cliente saiu");
+                System.out.println("LOGOUT CLIENT TPC");
                 break;
             default:
                 message = new Message(4, 0, "", 0, "", 5);

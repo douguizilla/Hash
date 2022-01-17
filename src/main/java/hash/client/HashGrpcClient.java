@@ -25,7 +25,7 @@ public class HashGrpcClient {
 
             while(!input.hasNextInt())
             {
-                System.out.println("Digite uma opção válida.");
+                System.out.println("Digite uma opção válida.\nOpção: ");
                 input.next();
             }
 
@@ -33,6 +33,8 @@ public class HashGrpcClient {
 
 
             if(option == 5){
+                ExitRequest exitRequest = ExitRequest.newBuilder().setMessage("").build();
+                clientStub.exit(exitRequest);
                 channel.shutdown();
                 break;
             }
