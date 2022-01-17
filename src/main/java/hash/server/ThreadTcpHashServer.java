@@ -25,16 +25,16 @@ public class ThreadTcpHashServer extends Thread {
             while (true) {
                 Message m = (Message) entrance.readObject();
 
-                operation(m, response);
-
-                hashTable.showAll();
-
                 if (m.getContent() == 5) {
                     response.close();
                     entrance.close();
                     client.close();
                     break;
                 }
+
+                operation(m, response);
+
+                hashTable.showAll();
             }
 
         } catch (Exception e) {

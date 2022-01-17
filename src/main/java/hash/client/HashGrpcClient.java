@@ -11,39 +11,42 @@ import static br.proto.hash.GrpcHashServiceGrpc.newBlockingStub;
 
 public class HashGrpcClient {
     public static void main(String[] args) {
-        ManagedChannel channel = ManagedChannelBuilder
-                .forAddress("localhost", 54321)
-                .usePlaintext()
-                .build();
+        try {
+            ManagedChannel channel = ManagedChannelBuilder
+                    .forAddress("localhost", 54321)
+                    .usePlaintext()
+                    .build();
 
-        GrpcHashServiceBlockingStub clientStub = newBlockingStub(channel);
+            GrpcHashServiceBlockingStub clientStub = newBlockingStub(channel);
 
-        Scanner input = new Scanner(System.in);
-        int option;
-        while(true){
-            menu();
+            Scanner input = new Scanner(System.in);
+            int option;
+            while (true) {
+                menu();
 
-            while(!input.hasNextInt())
-            {
-                System.out.println("Digite uma opção válida.\nOpção: ");
-                input.next();
+                while (!input.hasNextInt()) {
+                    System.out.println("Digite uma opção válida.\nOpção: ");
+                    input.next();
+                }
+
+                option = input.nextInt();
+
+
+                if (option == 5) {
+                    ExitRequest exitRequest = ExitRequest.newBuilder().setMessage("").build();
+                    clientStub.exit(exitRequest);
+                    channel.shutdown();
+                    break;
+                }
+
+                options(option, input, clientStub);
             }
 
-            option = input.nextInt();
-
-
-            if(option == 5){
-                ExitRequest exitRequest = ExitRequest.newBuilder().setMessage("").build();
-                clientStub.exit(exitRequest);
-                channel.shutdown();
-                break;
-            }
-
-            options(option, input, clientStub);
+            channel.shutdown();
+            System.out.println("Encerrado.");
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        channel.shutdown();
-        System.out.println("Encerrado.");
     }
 
     public static void options(int option, Scanner input, GrpcHashServiceBlockingStub clientStub){

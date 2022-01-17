@@ -103,8 +103,13 @@ public class GrpcHashServiceImpl extends GrpcHashServiceGrpc.GrpcHashServiceImpl
 
     @Override
     public void exit(Hash.ExitRequest request, StreamObserver<Hash.ExitResponse> responseObserver) {
+        Hash.ExitResponse response;
+        response = Hash.ExitResponse.newBuilder().setResponse(true).build();
+
         System.out.println("LOGOUT CLIENT GRPC");
-        super.exit(request, responseObserver);
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
 
