@@ -22,7 +22,15 @@ public class HashGrpcClient {
         int option;
         while(true){
             menu();
+
+            while(!input.hasNextInt())
+            {
+                System.out.println("Digite uma opção válida.");
+                input.next();
+            }
+
             option = input.nextInt();
+
 
             if(option == 5){
                 channel.shutdown();
@@ -43,6 +51,13 @@ public class HashGrpcClient {
         switch (option){
             case 1:
                 System.out.print("Digite a chave: ");
+
+                while(!input.hasNextInt())
+                {
+                    System.out.print("Digite um número inteiro! \n");
+                    input.next();
+                }
+
                 key = input.next();
 
                 System.out.print("Digite o valor: ");
@@ -67,6 +82,13 @@ public class HashGrpcClient {
             case 2:
 
                 System.out.print("Digite a chave: ");
+
+                while(!input.hasNextInt())
+                {
+                    System.out.print("Digite um número inteiro: \n");
+                    input.next();
+                }
+
                 key = input.next();
 
                 ReadRequest readRequest = ReadRequest
@@ -87,6 +109,13 @@ public class HashGrpcClient {
             case 3:
 
                 System.out.print("Digite a chave: ");
+
+                while(!input.hasNextInt())
+                {
+                    System.out.print("Digite um número inteiro: \n");
+                    input.next();
+                }
+
                 key = input.next();
 
                 System.out.print("Digite o valor: ");
@@ -111,6 +140,13 @@ public class HashGrpcClient {
             case 4:
 
                 System.out.print("Digite a chave: ");
+
+                while(!input.hasNextInt())
+                {
+                    System.out.print("Digite um número inteiro: \n");
+                    input.next();
+                }
+
                 key = input.next();
 
                 DeleteRequest deleteRequest = DeleteRequest
