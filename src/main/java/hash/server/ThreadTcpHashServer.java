@@ -22,20 +22,20 @@ public class ThreadTcpHashServer extends Thread {
         try {
             ObjectOutputStream response = new ObjectOutputStream(client.getOutputStream());
             ObjectInputStream entrance = new ObjectInputStream(client.getInputStream());
-           while(true) {
-               Message m = (Message) entrance.readObject();
+            while (true) {
+                Message m = (Message) entrance.readObject();
 
-               operation(m, response);
+                operation(m, response);
 
-               hashTable.showAll();
+                hashTable.showAll();
 
-               if (m.getContent() == 5){
-                   response.close();
-                   entrance.close();
-                   client.close();
-                   break;
-               }
-           }
+                if (m.getContent() == 5) {
+                    response.close();
+                    entrance.close();
+                    client.close();
+                    break;
+                }
+            }
 
         } catch (Exception e) {
             System.out.println("Erro " + e.toString());
@@ -43,7 +43,7 @@ public class ThreadTcpHashServer extends Thread {
         }
     }
 
-    public void operation(Message request,ObjectOutputStream response) throws IOException {
+    public void operation(Message request, ObjectOutputStream response) throws IOException {
 
         Message message;
         int result;
@@ -51,9 +51,9 @@ public class ThreadTcpHashServer extends Thread {
 
         switch (request.getContent()) {
             case 0:
-                synchronized (hashTable) {
-                    result = hashTable.add(request.getKey(), request.getValue());
-                }
+
+                result = hashTable.add(request.getKey(), request.getValue());
+
                 if (result == 1) {
                     message = new Message(0, 0, "", 0, "", 4);
                 } else {
@@ -63,20 +63,20 @@ public class ThreadTcpHashServer extends Thread {
                 break;
             case 1:
 
-                synchronized (hashTable) {
-                    value = hashTable.read(request.getKey());
-                }
+
+                value = hashTable.read(request.getKey());
+
                 if (value != null) {
-                    message = new Message(1, request.getKeySize(),request.getKey(),value.length(),value, 4);
+                    message = new Message(1, request.getKeySize(), request.getKey(), value.length(), value, 4);
                 } else {
                     message = new Message(1, 0, "", 0, "", 5);
                 }
                 response.writeObject(message);
                 break;
             case 2:
-                synchronized (hashTable) {
-                    result = hashTable.update(request.getKey(), request.getValue());
-                }
+
+                result = hashTable.update(request.getKey(), request.getValue());
+
                 if (result == 1) {
                     message = new Message(2, 0, "", 0, "", 4);
                 } else {
@@ -85,10 +85,10 @@ public class ThreadTcpHashServer extends Thread {
                 response.writeObject(message);
                 break;
             case 3:
-                synchronized (hashTable) {
-                    value = hashTable.remove(request.getKey());
-                }
-                if(value != null){
+
+                value = hashTable.remove(request.getKey());
+
+                if (value != null) {
                     message = new Message(3, request.getKeySize(), request.getKey(), value.length(), value, 4);
                 } else {
                     message = new Message(3, 0, "", 0, "", 5);

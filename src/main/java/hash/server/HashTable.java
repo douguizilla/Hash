@@ -6,7 +6,7 @@ import java.util.Map;
 public class HashTable {
     private Map<String,String> hashTable = new HashMap<>();
 
-    public int add(String key, String value){
+    synchronized public int add(String key, String value){
         if (!hashTable.containsKey(key)) {
             hashTable.put(key,value);
             return 1; //sucesso
@@ -14,7 +14,7 @@ public class HashTable {
         return 0; //fracasso
     }
 
-    public String remove(String key){
+    synchronized public String remove(String key){
         String value = hashTable.get(key);
         if(value == null)
             return null;
@@ -23,7 +23,7 @@ public class HashTable {
         return value;
     }
 
-    public int update(String key, String value){
+    synchronized public int update(String key, String value){
         if (hashTable.containsKey(key)){
             hashTable.replace(key,value);
             return 1;
@@ -32,11 +32,11 @@ public class HashTable {
         }
     }
 
-    public String read(String key){
+    synchronized public String read(String key){
         return hashTable.get(key);
     }
 
-    public void showAll(){
+    synchronized public void showAll(){
         System.out.println("=================");
         System.out.println("Tabela atualizada:");
         for (String _key: hashTable.keySet()) {
