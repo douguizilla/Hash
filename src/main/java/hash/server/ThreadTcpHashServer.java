@@ -63,8 +63,8 @@ public class ThreadTcpHashServer extends Thread {
                 }
                 response.writeObject(message);
                 break;
-            case 1:
 
+            case 1:
 
                 value = hashTable.read(request.getKey());
 
@@ -77,6 +77,7 @@ public class ThreadTcpHashServer extends Thread {
                 }
                 response.writeObject(message);
                 break;
+
             case 2:
 
                 result = hashTable.update(request.getKey(), request.getValue());
@@ -90,6 +91,7 @@ public class ThreadTcpHashServer extends Thread {
                 }
                 response.writeObject(message);
                 break;
+
             case 3:
 
                 value = hashTable.remove(request.getKey());
@@ -103,10 +105,14 @@ public class ThreadTcpHashServer extends Thread {
                 }
                 response.writeObject(message);
                 break;
+
             case 5:
+
                 System.out.println("LOGOUT CLIENT TPC");
                 break;
+
             default:
+
                 message = new Message(4, 0, "", 0, "", 5);
                 response.writeObject(message);
                 break;

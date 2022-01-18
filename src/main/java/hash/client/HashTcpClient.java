@@ -65,14 +65,6 @@ public class HashTcpClient {
         switch (option) {
             case 1:
                 System.out.print("Digite a chave: ");
-
-                while(!input.hasNextInt())
-                {
-                    System.out.print("Digite um número inteiro! \n");
-                    input.next();
-                }
-
-
                 key = input.next();
 
                 System.out.print("Digite o valor: ");
@@ -88,13 +80,6 @@ public class HashTcpClient {
 
             case 2:
                 System.out.print("Digite a chave: ");
-
-                while(!input.hasNextInt())
-                {
-                    System.out.print("Digite um número inteiro: \n");
-                    input.next();
-                }
-
                 key = input.next();
 
                 toServer = new Message(1,key.length(),key,0,"",4);
@@ -106,13 +91,6 @@ public class HashTcpClient {
 
             case 3:
                 System.out.print("Digite a chave: ");
-
-                while(!input.hasNextInt())
-                {
-                    System.out.print("Digite um número inteiro: \n");
-                    input.next();
-                }
-
                 key = input.next();
 
                 System.out.print("Digite o novo valor: ");
@@ -128,13 +106,6 @@ public class HashTcpClient {
 
             case 4:
                 System.out.print("Digite a chave: ");
-
-                while(!input.hasNextInt())
-                {
-                    System.out.print("Digite um número inteiro: \n");
-                    input.next();
-                }
-
                 key = input.next();
 
                 toServer = new Message(3,key.length(),key,0,"",4);
